@@ -9,7 +9,3 @@ pub async fn root() -> Html<String> {
     let template = IndexTemplate;
     Html(template.render().unwrap())
 }
-
-pub async fn test() -> &'static str {
-    "🎉 HTMX works!"
-}
