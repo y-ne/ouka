@@ -1,3 +1,15 @@
-pub async fn root() -> &'static str {
-    "Hi, wakimae"
+use askama::Template;
+use axum::response::Html;
+
+#[derive(Template)]
+#[template(path = "index.html")]
+pub struct IndexTemplate;
+
+pub async fn root() -> Html<String> {
+    let template = IndexTemplate;
+    Html(template.render().unwrap())
+}
+
+pub async fn test() -> &'static str {
+    "🎉 HTMX works!"
 }
