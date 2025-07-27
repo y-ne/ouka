@@ -1,0 +1,21 @@
+services:
+    ouka:
+        image: ouka:latest
+        container_name: ouka
+        restart: unless-stopped
+        networks:
+            - frontend
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.ouka.rule=Host(`wakimae.com`)"
+            - "traefik.http.routers.ouka.entrypoints=websecure"
+            - "traefik.http.routers.ouka.tls.certresolver=letsencrypt"
+            - "traefik.http.services.ouka.loadbalancer.server.port=3000"
+            - "traefik.http.routers.ouka-http.rule=Host(`wakimae.com`)"
+            - "traefik.http.routers.ouka-http.entrypoints=web"
+            - "traefik.http.routers.ouka-http.middlewares=redirect-to-https"
+            - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+
+networks:
+    frontend:
+        external: true
